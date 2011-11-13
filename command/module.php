@@ -11,11 +11,10 @@ class Command_Module extends Command
 	const GENERATE_BRIEF = "Generate a module stup";
 	const GENERATE_DESC = "Generate a module with ./kohana module:generate <module-name> Optional params are --guide and --init which will generate those stubs of the module for you";
 	
-	public function generate($name)
+	public function generate(Command_Options $options, $name)
 	{
 		$module_name = str_replace("/","-", $name);
 		$module_title = ucfirst(Inflector::humanize($module_name));
-		$options = CLI::options("guide", "init");
 
 		if( ! is_dir(MODPATH.$name))
 			mkdir(MODPATH.$name, 0777, true);
@@ -36,7 +35,7 @@ class Command_Module extends Command
 
 		$this->log("Generated directory structure", Command::OK);
 
-		if( array_key_exists('guide', $options))
+		if( $options->offsetExists('guide') )
 		{
 			mkdir(MODPATH.$name.DIRECTORY_SEPARATOR.'guide'.DIRECTORY_SEPARATOR.$module_name, 0777, true);
 
@@ -60,7 +59,7 @@ class Command_Module extends Command
 
 			$this->log("Generated guide", Command::OK);
 		}
-		if( array_key_exists('init', $options))
+		if( $options->offsetExists('init') )
 		{
 			$this->set_template(
 				MODPATH.$name.DIRECTORY_SEPARATOR."init".EXT,

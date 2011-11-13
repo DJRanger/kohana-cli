@@ -3,18 +3,6 @@
 
 include_once getcwd().DIRECTORY_SEPARATOR."modules".DIRECTORY_SEPARATOR."kohana-cli".DIRECTORY_SEPARATOR."bootstrap.php";
 
-function load_command_file($command)
-{
-	$command_file = Kohana::find_file('command', $command);
-
-	if( ! $command_file OR ! is_file( $command_file ))
-		throw new Kohana_Exception("Could not find command :command", array(":command" => $command));
-
-	require_once $command_file;
-
-	return 'Command_'.ucfirst($command);
-}
-
 try{
 	if ( ! (php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR'])) )
 	{
@@ -57,7 +45,7 @@ try{
 	{
 		$arguments = explode(':', $argv[2]);
 
-		$class = new ReflectionClass(load_command_file($arguments[0]));
+		$class = new ReflectionClass(Command::load_command_file($arguments[0]));
 
 		$method_name = isset($arguments[1]) ? join('_', array_slice($arguments,1)) : 'index';
 
@@ -76,13 +64,9 @@ try{
 	}
 	else
 	{
-		$arguments = explode(':', $argv[1]);
+		$options = Command_Options::factory()->populate_from_argv();
 
-		$class_name = load_command_file($arguments[0]);
-
-		$method_name = isset($arguments[1]) ? join('_', array_slice($arguments,1)) : 'index';
-
-		$method_arguments = array();
+		$method_arguments = array($argv[1], $options);
 		foreach(array_slice($argv, 2) as $argument)
 		{
 			if(substr($argument, 0, 2) !== '--')
@@ -91,15 +75,7 @@ try{
 			}
 		}
 
-		$cli = new $class_name();
-
-		if( !($cli instanceof Command))
-			throw new Kohana_Exception("Your command class $class_name must extend Command");
-
-		if( ! method_exists($cli, $method_name))
-			throw new Kohana_Exception("Your command $method_name does not exists in class $class_name");
-		
-		call_user_func_array(array($cli, $method_name), $method_arguments);	
+		call_user_func_array('Command::execute', $method_arguments);
 	}
 }
 catch( Exception $e)

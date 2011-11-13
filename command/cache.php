@@ -12,7 +12,7 @@ class Command_Cache extends Command
 {
 
 	const CLEAR_BRIEF = "Clear system cache and Cache";
-	public function clear()
+	public function clear(Command_Options $options)
 	{
 		self::log_func(array(Cache::instance(), 'delete_all'), null, Command::OK);
 		self::log_func("system", array("rm -rf ".Kohana::$cache_dir."/*"), Command::OK);

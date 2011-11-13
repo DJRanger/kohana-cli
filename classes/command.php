@@ -151,4 +151,38 @@ class Command
 
 		self::log('   --> '.number_format($end-$start, 4).'s', $type);
 	}	
+
+	static public function execute($command, Command_Options $options)
+	{
+		$command = explode(':', $command);
+
+		$class_name = Command::load_command_file($command[0]);
+
+		$method_name = isset($command[1]) ? join('_', array_slice($command,1)) : 'index';
+
+		$cli = new $class_name();
+
+		if( !($cli instanceof Command))
+			throw new Kohana_Exception("Your command class $class_name must extend Command");
+
+		if( ! method_exists($cli, $method_name))
+			throw new Kohana_Exception("Your command $method_name does not exists in class $class_name");
+
+		$method_arguments = func_get_args();
+
+		return call_user_func_array(array($cli, $method_name), array_slice($method_arguments, 1));	
+	}
+
+	static public function load_command_file($command)
+	{
+		$command_file = Kohana::find_file('command', $command);
+
+		if( ! $command_file OR ! is_file( $command_file ))
+			throw new Kohana_Exception("Could not find command :command", array(":command" => $command));
+
+		require_once $command_file;
+
+		return 'Command_'.ucfirst($command);
+	}
+
 }
