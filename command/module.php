@@ -13,7 +13,7 @@ class Command_Module extends Command
 	
 	public function generate(Command_Options $options, $name)
 	{
-		$module_name = str_replace("/","-", $name);
+		$module_name = basename($name);
 		$module_title = ucfirst(Inflector::humanize($module_name));
 
 		if( ! is_dir(MODPATH.$name))
@@ -35,7 +35,7 @@ class Command_Module extends Command
 
 		$this->log("Generated directory structure", Command::OK);
 
-		if( $options->offsetExists('guide') )
+		if( $options->has('guide') )
 		{
 			mkdir(MODPATH.$name.DIRECTORY_SEPARATOR.'guide'.DIRECTORY_SEPARATOR.$module_name, 0777, true);
 
@@ -59,7 +59,7 @@ class Command_Module extends Command
 
 			$this->log("Generated guide", Command::OK);
 		}
-		if( $options->offsetExists('init') )
+		if( $options->has('init') )
 		{
 			$this->set_template(
 				MODPATH.$name.DIRECTORY_SEPARATOR."init".EXT,
