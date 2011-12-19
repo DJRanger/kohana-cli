@@ -127,7 +127,7 @@ class Command
 	 * @return void
 	 * @author Ivan K
 	 */
-	static public function log_func($func, $args = null, $type = null)
+	static public function log_func($func, $args = null, $type = null, $func_string = NULL)
 	{
 		$args_string = array();
 		foreach((array) $args as $arg)
@@ -135,13 +135,22 @@ class Command
 			$args_string[] = (string) $arg;
 		}
 
-		$func_string = $func;
-		if(is_array($func))
+		if( ! $func_string)
 		{
-			$func_string = (is_object($func[0]) ? get_class($func[0]) : $func[0]).'->'.$func[1];
+			$func_string = $func;
+
+			if(is_array($func))
+			{
+				$func_string = (is_object($func[0]) ? get_class($func[0]) : $func[0]).'->'.$func[1];
+			}
+
+			if($args)
+			{
+				$func_string .= ($args ? "( ".join(', ', $args_string)." )" : '');
+			}
 		}
 
-		self::log("-- $func_string". ($args ? "( ".join(', ', $args_string)." )" : ''), $type);
+		self::log("-- $func_string", $type);
 
 		$start = microtime(TRUE);
 
