@@ -1,6 +1,6 @@
 # Cache sweeper
 
-	<?php defined('SYSPATH') or die('No direct script access.');
+	<?php defined('SYSPATH') OR die('No direct script access.');
 
 	class Command_Cache extends Command
 	{
@@ -19,7 +19,7 @@ So you can access it like this
 
 # Generate Model File
 
-	<?php defined('SYSPATH') or die('No direct script access.');
+	<?php defined('SYSPATH') OR die('No direct script access.');
 
 	class Command_Generate extends Command
 	{
