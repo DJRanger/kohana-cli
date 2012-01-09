@@ -56,7 +56,7 @@ class Command
 	 * @author Ivan K
 	 **/
 	static public function colored($string, $foreground_color = null, $background_color = null) {
-		if( ! Kohana::$config->load('cli.colorize'))
+		if ( ! Kohana::$config->load('cli.colorize'))
 			return $string;
 
 		$colored_string = "";
@@ -85,7 +85,7 @@ class Command
 	 **/
 	static public function log($string, $type = null)
 	{
-		if($type)
+		if ($type)
 		{
 			echo self::colored($string, $type)."\n";
 		}
@@ -106,16 +106,16 @@ class Command
 	{
 		$template_filename = Kohana::find_file('templates', $name, 'tpl');
 
-		if( ! $template_filename )
+		if ( ! $template_filename )
 			throw new Kohana_Exception("Kohana Exception does not exist: :name", array(":name" => $name));
 		
 		$template = file_get_contents($template_filename);
 
-		if( $decorations )
+		if ( $decorations )
 		{
 			$template = strtr($template, $decorations);   
 		}
-		if( ! is_file($filename))
+		if ( ! is_file($filename))
 			file_put_contents($filename, $template);
 	}
 
@@ -124,27 +124,28 @@ class Command
 	 * @param string|array $func A callable string / array of class and method name
 	 * @param array $args An array of arguments to pass to the function
 	 * @param string $type (color)
+	 * @param string $func_string - the textual representation of the function in the log
 	 * @return void
 	 * @author Ivan K
 	 */
 	static public function log_func($func, $args = null, $type = null, $func_string = NULL)
 	{
 		$args_string = array();
-		foreach((array) $args as $arg)
+		foreach ((array) $args as $arg)
 		{
 			$args_string[] = (string) $arg;
 		}
 
-		if( ! $func_string)
+		if ( ! $func_string)
 		{
 			$func_string = $func;
 
-			if(is_array($func))
+			if (is_array($func))
 			{
 				$func_string = (is_object($func[0]) ? get_class($func[0]) : $func[0]).'->'.$func[1];
 			}
 
-			if($args)
+			if ($args)
 			{
 				$func_string .= ($args ? "( ".join(', ', $args_string)." )" : '');
 			}
@@ -171,10 +172,10 @@ class Command
 
 		$cli = new $class_name();
 
-		if( !($cli instanceof Command))
+		if ( ! ($cli instanceof Command))
 			throw new Kohana_Exception("Your command class $class_name must extend Command");
 
-		if( ! method_exists($cli, $method_name))
+		if ( ! method_exists($cli, $method_name))
 			throw new Kohana_Exception("Your command $method_name does not exists in class $class_name");
 
 		$method_arguments = func_get_args();
@@ -186,7 +187,7 @@ class Command
 	{
 		$command_file = Kohana::find_file('command', $command);
 
-		if( ! $command_file OR ! is_file( $command_file ))
+		if ( ! $command_file OR ! is_file( $command_file ))
 			throw new Kohana_Exception("Could not find command :command", array(":command" => $command));
 
 		require_once $command_file;
