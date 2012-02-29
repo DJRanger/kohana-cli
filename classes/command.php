@@ -164,6 +164,11 @@ class Command
 
 	static public function execute($command, Command_Options $options)
 	{
+		if ( ! Request::initial())
+		{
+			Request::factory()->protocol('http');
+		}
+
 		$command = explode(':', $command);
 
 		$class_name = Command::load_command_file($command[0]);
