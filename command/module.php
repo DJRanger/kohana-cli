@@ -16,16 +16,16 @@ class Command_Module extends Command
 		$module_name = basename($name);
 		$module_title = ucfirst(Inflector::humanize($module_name));
 
-		if( ! is_dir(MODPATH.$name))
+		if ( ! is_dir(MODPATH.$name))
 			mkdir(MODPATH.$name, 0777, true);
 
-		if( ! is_dir(MODPATH.$name.DIRECTORY_SEPARATOR.'classes'))
+		if ( ! is_dir(MODPATH.$name.DIRECTORY_SEPARATOR.'classes'))
 			mkdir(MODPATH.$name.DIRECTORY_SEPARATOR.'classes', 0777, true);
 
-		if( ! is_dir(MODPATH.$name.DIRECTORY_SEPARATOR.'config'))
+		if ( ! is_dir(MODPATH.$name.DIRECTORY_SEPARATOR.'config'))
 			mkdir(MODPATH.$name.DIRECTORY_SEPARATOR.'config', 0777, true);
 
-		if( ! is_dir(MODPATH.$name.DIRECTORY_SEPARATOR.'tests'))
+		if ( ! is_dir(MODPATH.$name.DIRECTORY_SEPARATOR.'tests'))
 			mkdir(MODPATH.$name.DIRECTORY_SEPARATOR.'tests', 0777, true);
 
 		$this->set_template(
@@ -35,7 +35,7 @@ class Command_Module extends Command
 
 		$this->log("Generated directory structure", Command::OK);
 
-		if( $options->has('guide') )
+		if ( $options->has('guide') )
 		{
 			mkdir(MODPATH.$name.DIRECTORY_SEPARATOR.'guide'.DIRECTORY_SEPARATOR.$module_name, 0777, true);
 
@@ -59,7 +59,7 @@ class Command_Module extends Command
 
 			$this->log("Generated guide", Command::OK);
 		}
-		if( $options->has('init') )
+		if ( $options->has('init') )
 		{
 			$this->set_template(
 				MODPATH.$name.DIRECTORY_SEPARATOR."init".EXT,
