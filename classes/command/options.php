@@ -3,7 +3,7 @@
  * HTML Attributes
  * @package    OpenBuildings/kohana-cli
  * @author     Ivan Kerin
- * @copyright  (c) 2011 OpenBuildings Inc.
+ * @copyright  (c) 2011-2012 OpenBuildings Inc.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 class Command_Options implements ArrayAccess, Iterator, Countable 
