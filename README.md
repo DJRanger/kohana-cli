@@ -153,3 +153,9 @@ So you can generate a model file like this
 ```
 ./kohana generate:model user --module=users	
 ```
+
+License
+-------
+
+jamaker is Copyright © 2012 OpenBuildings Inc, developed by Ivan Kerin. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+
