@@ -15,6 +15,7 @@ class Command_Cache extends Command
 	public function clear(Command_Options $options)
 	{
 		self::log_func(array(Cache::instance(), 'delete_all'), null, Command::OK);
+		self::log_func(array(Cache::instance('memcache'), 'delete_all'), null, Command::OK);
 		self::log_func("system", array("rm -rf ".Kohana::$cache_dir."/*"), Command::OK);
 	}
 }
