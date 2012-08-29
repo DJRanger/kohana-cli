@@ -157,5 +157,5 @@ So you can generate a model file like this
 License
 -------
 
-Kohana CLI is under Copyright © 2012 OpenBuildings Inc, developed by Ivan Kerin. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+Kohana CLI is under Copyright © 2012 Despark Ltd. developed by Ivan Kerin. It is free software, and may be redistributed under the terms specified in the LICENSE file.
 

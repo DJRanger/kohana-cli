@@ -5,9 +5,9 @@
  *
  * A class to be extended by all commands in the application, provides some logging methods
  *
- * @package    OpenBuildings/kohana-cli
+ * @package    Despark/kohana-cli
  * @author     Ivan Kerin
- * @copyright  (c) 2011-2012 OpenBuildings Inc.
+ * @copyright  (c) 2011-2012 Despark Ltd.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 class Command
